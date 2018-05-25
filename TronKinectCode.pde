@@ -1,6 +1,11 @@
 import kinect4WinSDK.Kinect;
 import kinect4WinSDK.SkeletonData;
  
+//variables for transformations 
+int dialation;
+int translationX;
+int translationY;
+
 Kinect kinect;
 ArrayList <SkeletonData> bodies;
 
@@ -14,6 +19,14 @@ void setup()
   smooth();
   bodies = new ArrayList<SkeletonData>();
   
+  //set up dialation and translation for skeleton joints
+  //never set dialtion equal to zero
+  //if you want the skelton to be original size set it equal to 0
+  dialation =1;
+  translationX=0;
+  translationY=0;
+  
+  
 }
  
  /*
@@ -22,7 +35,7 @@ void setup()
  */
 void draw()
 {
-  background(0);
+  background(100,255,100);
  image(kinect.GetImage(), 320, 0, 320, 240);
  image(kinect.GetDepth(), 320, 240, 320, 240);
  image(kinect.GetMask(), 0, 240, 320, 240);
@@ -39,7 +52,8 @@ void drawPosition(SkeletonData _s)
   noStroke();
   fill(0, 100, 255);
   String s1 = str(_s.dwTrackingID);
-  text(s1, _s.position.x*width/2, _s.position.y*height/2);
+  
+  text(s1, _s.position.x*width/dialation+translationX, _s.position.y*height/dialation+translationY);
 }
  
 void drawSkeleton(SkeletonData _s) 
@@ -120,17 +134,21 @@ void drawSkeleton(SkeletonData _s)
   Kinect.NUI_SKELETON_POSITION_ANKLE_RIGHT, 
   Kinect.NUI_SKELETON_POSITION_FOOT_RIGHT);
 }
- 
+
+//A BONE CONNNECTS TWO JOINTS 
+//here is where you can do transformations on the joints 
 void DrawBone(SkeletonData _s, int _j1, int _j2) 
 {
   noFill();
-  stroke(255, 255, 0);
+  stroke(255, 0, 0);
+  
   if (_s.skeletonPositionTrackingState[_j1] != Kinect.NUI_SKELETON_POSITION_NOT_TRACKED &&
-    _s.skeletonPositionTrackingState[_j2] != Kinect.NUI_SKELETON_POSITION_NOT_TRACKED) {
-    line(_s.skeletonPositions[_j1].x*width/2, 
-    _s.skeletonPositions[_j1].y*height/2, 
-    _s.skeletonPositions[_j2].x*width/2, 
-    _s.skeletonPositions[_j2].y*height/2);
+    _s.skeletonPositionTrackingState[_j2] != Kinect.NUI_SKELETON_POSITION_NOT_TRACKED) 
+    {
+      line(_s.skeletonPositions[_j1].x*width/dialation+translationX, 
+      _s.skeletonPositions[_j1].y*height/dialation+translationY,     
+      _s.skeletonPositions[_j2].x*width/dialation+translationX,  
+      _s.skeletonPositions[_j2].y*height/dialation+translationY);
   }
 }
 
