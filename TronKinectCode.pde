@@ -220,6 +220,7 @@ void getDirection(SkeletonData _s)
   //breaking down positions into basic controls 
   boolean leftUp = leftHand.y<torso.y;
   boolean rightUp= rightHand.y<torso.y;
+<<<<<<< HEAD
   /*
   if(leftUp&&!rightUp)
   {
@@ -241,6 +242,8 @@ void getDirection(SkeletonData _s)
     System.out.println(3);
   }
   */
+=======
+>>>>>>> a2cae4b240a05b7f5eca12886e0af311f0df067b
   if(leftUp)
   {
     if(rightUp)
