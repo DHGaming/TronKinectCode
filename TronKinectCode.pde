@@ -25,8 +25,6 @@ void setup()
   dialation =1;
   translationX=0;
   translationY=0;
-  
-  
 }
  
  /*
@@ -43,6 +41,7 @@ void draw()
   {
     drawSkeleton(bodies.get(i));
    drawPosition(bodies.get(i));
+   getDirection(bodies.get(i));
   }
   
 }
@@ -208,5 +207,61 @@ void moveEvent(SkeletonData _b, SkeletonData _a)
         break;
       }
     }
+  }
+}
+
+void getDirection(SkeletonData _s)
+{
+   //here we retrieve the vectors of each 
+   PVector leftHand = _s.skeletonPositions[Kinect.NUI_SKELETON_POSITION_HAND_LEFT];
+   PVector rightHand =_s.skeletonPositions[Kinect.NUI_SKELETON_POSITION_HAND_RIGHT];
+   PVector torso = _s.skeletonPositions[Kinect.NUI_SKELETON_POSITION_SHOULDER_CENTER];
+   
+  //breaking down positions into basic controls 
+  boolean leftUp = leftHand.y<torso.y;
+  boolean rightUp= rightHand.y<torso.y;
+  /*
+  if(leftUp&&!rightUp)
+  {
+   // playerId.changeDirection(0);
+    System.out.println(0);
+  }
+   if(!leftUp&&rightUp){
+   //playerId.changeDirection(1)//car rif (leftUp) 
+   System.out.println(1);
+  {//car Dight
+ }
+  if(leftUp&&rightUp) {
+    //playerId.changeDirection(2)
+    System.out.println(2);
+  }
+  if(!(leftUp&&rightUp))
+  {
+    //playerId.changeDirection(3)
+    System.out.println(3);
+  }
+  */
+  if(leftUp)
+  {
+    if(rightUp)
+    {
+      System.out.println("Up");
+    }
+    else
+    {
+      System.out.println("Left");
+    }
+  }
+  else
+  {
+    if (rightUp)
+    {
+      System.out.println("Right");
+    }
+  
+  }
+  if(!rightUp&&!leftUp)
+  {
+       System.out.println("Down");
   }
 }
